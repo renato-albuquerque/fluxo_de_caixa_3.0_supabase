@@ -1,4 +1,4 @@
--- Tabelas dimensão x fato a serem criadas:
+-- Tabelas dimensao x fato a serem criadas:
 -- dim_bancos, dim_plano_contas, dim_calendario, f_movimentos, f_saldo_anterior
 
 -- tabelas dimensao
@@ -76,9 +76,47 @@ limit 10;
 
 -- tabelas fato
 
--- f_movimentos
+-- fato_saldo_anterior
+create table if not exists gold.fato_saldo_anterior as
+select
+  banco_id,   -- fk para gold.dim_bancos
+  valor
+from silver.saldo_anterior; 
 
--- f_saldo_anterior
+-- inserir coluna data_id   -- fk para gold.dim_calendario
+alter table gold.fato_saldo_anterior
+add column data_id int;
+
+-- populando coluna data_id
+update gold.fato_saldo_anterior f
+set data_id = d.data_id
+from gold.dim_calendario d
+where d.data = (
+  select min(data) - interval '1 day'
+  from silver.movimentos
+);
+
+-- PK & FK
+alter table gold.fato_saldo_anterior
+add constraint pk_fato_saldo_anterior
+  primary key (data_id, banco_id),
+
+add constraint fk_fsa_data
+  foreign key (data_id)
+  references gold.dim_calendario (data_id),
+
+add constraint fk_fsa_banco
+  foreign key (banco_id)
+  references gold.dim_bancos (banco_id);
+
+select * from gold.fato_saldo_anterior
+limit 10;
+
+-- fato_movimentos
+
+
+
+
 
 
 
