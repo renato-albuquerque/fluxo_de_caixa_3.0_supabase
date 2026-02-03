@@ -113,6 +113,35 @@ select * from gold.fato_saldo_anterior
 limit 10;
 
 -- fato_movimentos
+create table if not exists gold.fato_movimentos as
+select
+  banco_id,   --fk para gold.dim_bancos
+  conta_id,   --fk para gold.dim_plano_contas
+  tipo,
+  data,
+  valor
+from silver.movimentos_transf; 
+
+-- PK & FK
+alter table gold.fato_movimentos
+add constraint fk_fm_banco
+    foreign key (banco_id)
+    references gold.dim_bancos (banco_id),
+
+add constraint fk_fm_conta
+    foreign key (conta_id)
+    references gold.dim_plano_contas (conta_id);
+
+select * from gold.fato_movimentos;
+
+-- tabelas camada gold criadas:
+-- gold.dim_bancos
+-- gold.dim_plano_contas
+-- gold.dim_calendario
+-- gold.fato_saldo_anterior
+-- gold.fato_movimentos
+
+-- end.
 
 
 
