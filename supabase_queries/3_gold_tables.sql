@@ -1,5 +1,5 @@
 -- Tabelas dimensao x fato a serem criadas:
--- dim_bancos, dim_plano_contas, dim_calendario, f_movimentos, f_saldo_anterior
+-- dim_bancos, dim_plano_contas, dim_calendario, fato_movimentos, fato_saldo_anterior
 
 -- tabelas dimensao
 
@@ -13,8 +13,7 @@ from silver.bancos;
 alter table gold.dim_bancos
 add constraint pk_bancos primary key (banco_id);
 
-select * from gold.dim_bancos
-limit 10;
+select * from gold.dim_bancos;
 
 -- dim_plano_contas
 create table if not exists gold.dim_plano_contas as
@@ -28,8 +27,7 @@ from silver.plano_contas;
 alter table gold.dim_plano_contas
 add constraint pk_dim_plano_contas primary key (conta_id);
 
-select * from gold.dim_plano_contas
-limit 10;
+select * from gold.dim_plano_contas;
 
 -- dim_calendario
 create table if not exists gold.dim_calendario (
@@ -71,8 +69,7 @@ add column mes_nome_abrev text;
 update gold.dim_calendario
 set mes_nome_abrev = lower(to_char(data, 'Mon'));
 
-select * from gold.dim_calendario
-limit 10;
+select * from gold.dim_calendario;
 
 -- tabelas fato
 
@@ -109,8 +106,7 @@ add constraint fk_fsa_banco
   foreign key (banco_id)
   references gold.dim_bancos (banco_id);
 
-select * from gold.fato_saldo_anterior
-limit 10;
+select * from gold.fato_saldo_anterior;
 
 -- fato_movimentos
 create table if not exists gold.fato_movimentos as
@@ -140,6 +136,68 @@ select * from gold.fato_movimentos;
 -- gold.dim_calendario
 -- gold.fato_saldo_anterior
 -- gold.fato_movimentos
+
+-- criar views
+
+-- vw_dim_bancos
+create or replace view gold.vw_dim_bancos as
+select
+  banco_id,
+  banco as banco_nome
+from gold.dim_bancos;
+
+select * from gold.vw_dim_bancos;
+
+-- vw_dim_plano_contas
+create or replace view gold.vw_dim_plano_contas as
+select
+  conta_id,
+  conta as conta_nome,
+  subgrupo_id,
+  subgrupo as subgrupo_nome
+from gold.dim_plano_contas;
+
+select * from gold.vw_dim_plano_contas;
+
+-- vw_dim_calendario
+create or replace view gold.vw_dim_calendario as
+select
+  data_id,
+  data,
+  ano,
+  mes,
+  mes_nome,
+  mes_nome_abrev,
+  trimestre,
+  dia,
+  dia_semana,
+  dia_semana_nome,
+  is_fim_semana
+from gold.dim_calendario;
+
+select * from gold.vw_dim_calendario;
+
+-- vw_fato_saldo_anterior
+create or replace view gold.vw_fato_saldo_anterior as
+select
+  data_id,
+  banco_id,
+  valor
+from gold.fato_saldo_anterior;
+
+select * from gold.vw_fato_saldo_anterior;
+
+-- vw_fato_movimentos
+create or replace view gold.vw_fato_movimentos as
+select
+  banco_id,  
+  conta_id,   
+  tipo as tipo_movimento,
+  data,
+  valor
+from gold.fato_movimentos;
+
+select * from gold.vw_fato_movimentos;
 
 -- end.
 
