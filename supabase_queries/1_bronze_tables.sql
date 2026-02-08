@@ -1,5 +1,3 @@
--- 1_bronze_tables
-
 -- criar schemas
 create schema if not exists bronze; 
 create schema if not exists silver;
@@ -24,6 +22,27 @@ create table bronze.movimentos_raw (
   banco text,
   valor text   
 );
+
+-- ###
+-- erro inconsistencia dado (coluna valor), upload do arquivo para a camada bronze. 
+select
+  sum(
+    cast(
+      replace(
+        replace(valor, '.', ''),
+      ',', '.'
+      ) as numeric(14,2)
+    )
+  ) as total_bronze
+from bronze.movimentos_raw;
+-- Bronze (após upload): -4.034.895,76
+-- Excel (correto): -5.876.243,17
+-- Diferenca: ~1,84 Mi
+
+select count(*) as qtd_bronze
+from bronze.movimentos_raw;
+-- 16792 (ok)
+-- ###
 
 create table bronze.plano_contas_raw (
   subgrupo_id integer,

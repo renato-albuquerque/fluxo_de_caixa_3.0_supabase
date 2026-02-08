@@ -46,23 +46,26 @@ create table if not exists silver.movimentos as
 select
   case
     when lower(trim(tipo)) like 'entrada%' then 'e'
-    when lower(trim(tipo)) like 'saída%' 
-      or lower(trim(tipo)) like 'saida%'   then 's'
+    when lower(trim(tipo)) like 'saída%'
+      or lower(trim(tipo)) like 'saida%' then 's'
     else null
   end as tipo,
-  lower(trim(conta)) as conta,  -- lower para texto minusculo, trim para retirar espacos
-  to_date(data, 'DD-MM-YYYY') as data,
-  lower(trim(banco)) as banco,  -- lower para texto minusculo, trim para retirar espacos
-  cast(
-    replace(
-      replace(valor, '.', ''),
-    ',', '.')
-  as numeric(14,2)) as valor,
-  now() as loaded_at   
-from bronze.movimentos_raw;  
 
-select * from silver.movimentos
-limit 10;
+  lower(trim(conta)) as conta,
+
+  to_date(data, 'DD-MM-YYYY') as data,
+
+  lower(trim(banco)) as banco,
+
+  replace(
+    regexp_replace(valor, '[^0-9,-]', '', 'g'),
+    ',', '.'
+  )::numeric(14,2) as valor,
+
+  now() as loaded_at
+from bronze.movimentos_raw;
+
+select * from silver.movimentos;
 
 -- criar tabela silver.movimentos_transf (transformada)
 -- inserir colunas banco_id e conta_id 
@@ -82,7 +85,12 @@ left join silver.plano_contas pc on m."conta" = pc."conta";
 select * from silver.movimentos_transf
 limit 10;
 
--- tabelas camada silver criadas.
+-- tabelas camada silver criadas:
+-- silver.bancos
+-- silver.plano_contas
+-- silver.saldo_anterior
+-- silver.movimentos_transf
+
 -- end.
 
 

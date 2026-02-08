@@ -199,6 +199,14 @@ from gold.fato_movimentos;
 
 select * from gold.vw_fato_movimentos;
 
+-- views criadas no supabase
+vw_dim_bancos
+vw_dim_plano_contas
+vw_dim_calendario
+vw_fato_saldo_anterior
+vw_fato_movimentos
+
+
 -- end.
 
 
