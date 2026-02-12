@@ -41,8 +41,37 @@ from bronze.movimentos_raw;
 
 select count(*) as qtd_bronze
 from bronze.movimentos_raw;
--- 16792 (ok)
--- ###
+-- 16792
+-- 14932 linhas (excel), informacoes divergentes
+
+-- diagnostico, pesquisa erro:
+-- Excel está em formato pt-BR: 5.876.243,17
+-- PostgreSQL/Supabase trabalha naturalmente com padrão en-US: 5876243.17
+
+-- acao
+-- foi criado nova coluna no dataset, valor_novo, formula inserida, =SUBSTITUIR(SUBSTITUIR(E2;".";"");",";".")
+-- depois, nesta nova coluna, copiar colar com valores 
+
+create table bronze.movimentos_novo_raw (
+  tipo text,
+  conta text,
+  data text,
+  banco text,
+  valor_novo text   
+);
+
+-- upload realizado do novo csv
+-- checks:
+select
+  sum(valor_novo::numeric(14,2)) as total_bronze
+from bronze.movimentos_novo_raw;
+-- Bronze (após upload): -5876243.17
+-- Excel: -5.876.243,17
+-- ingestao na camada bronze corrigida
+
+select count(*) as qtd_bronze
+from bronze.movimentos_novo_raw;
+-- 14932 (ok)
 
 create table bronze.plano_contas_raw (
   subgrupo_id integer,
@@ -60,9 +89,12 @@ create table bronze.saldo_anterior_raw (
 
 -- checar todas as tabelas
 select * from bronze.bancos_raw;
-select * from bronze.movimentos_raw;
+select * from bronze.movimentos_novo_raw;
 select * from bronze.plano_contas_raw;
 select * from bronze.saldo_anterior_raw;
+
+-- tabela com erro, ingestao para a camada bronze (fora de uso no projeto)
+select * from bronze.movimentos_raw;
 
 -- tabelas camada bronze criadas.
 -- end.

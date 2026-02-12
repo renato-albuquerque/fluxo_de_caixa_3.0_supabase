@@ -41,8 +41,10 @@ from bronze.saldo_anterior_raw;
 
 select * from silver.saldo_anterior;
 
--- tabela silver.movimentos (todas as colunas estao como text)
-create table if not exists silver.movimentos as
+-- tabela silver.movimentos_novo (todas as colunas estao como text)
+drop table if exists silver.movimentos_novo;
+
+create table silver.movimentos_novo as
 select
   case
     when lower(trim(tipo)) like 'entrada%' then 'e'
@@ -57,39 +59,54 @@ select
 
   lower(trim(banco)) as banco,
 
-  replace(
-    regexp_replace(valor, '[^0-9,-]', '', 'g'),
-    ',', '.'
-  )::numeric(14,2) as valor,
+  valor_novo::numeric(14,2) as valor,
 
   now() as loaded_at
-from bronze.movimentos_raw;
 
-select * from silver.movimentos;
+from bronze.movimentos_novo_raw;
+
+select * from silver.movimentos_novo;
+
+-- check:
+select sum(valor) from silver.movimentos_novo;
+-- -5876243.17 (ok)
+
+select count(*) as qtd_silver
+from silver.movimentos_novo;
+-- 14932 (ok)
 
 -- criar tabela silver.movimentos_transf (transformada)
 -- inserir colunas banco_id e conta_id 
 -- excluir colunas banco e conta
 
-create table if not exists silver.movimentos_transf as
+drop table if exists silver.movimentos_transf;
+
+create table if not exists silver.movimentos_novo_transf as
 select
   b.banco_id,
   pc.conta_id,
   m.tipo,
   m.data,
   m.valor
-from silver.movimentos m
+from silver.movimentos_novo m
 left join silver.bancos b on m."banco" = b."banco"
 left join silver.plano_contas pc on m."conta" = pc."conta"; 
 
-select * from silver.movimentos_transf
-limit 10;
+select * from silver.movimentos_novo_transf;
+
+-- checks:
+select sum(valor) from silver.movimentos_novo_transf;
+-- -5876243.17 (ok)
+
+select count(*) as qtd_silver
+from silver.movimentos_novo_transf;
+-- 14932 (ok)
 
 -- tabelas camada silver criadas:
 -- silver.bancos
 -- silver.plano_contas
 -- silver.saldo_anterior
--- silver.movimentos_transf
+-- silver.movimentos_novo_transf
 
 -- end.
 
