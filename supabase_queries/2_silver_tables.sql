@@ -42,7 +42,7 @@ from bronze.saldo_anterior_raw;
 select * from silver.saldo_anterior;
 
 -- tabela silver.movimentos_novo (todas as colunas estao como text)
-drop table if exists silver.movimentos_novo;
+drop table if exists silver.movimentos_novo; -- corrigir tabela silver.movimentos
 
 create table silver.movimentos_novo as
 select
@@ -79,7 +79,7 @@ from silver.movimentos_novo;
 -- inserir colunas banco_id e conta_id 
 -- excluir colunas banco e conta
 
-drop table if exists silver.movimentos_transf;
+drop table if exists silver.movimentos_transf; -- corrigir tabela silver.movimentos_transf
 
 create table if not exists silver.movimentos_novo_transf as
 select

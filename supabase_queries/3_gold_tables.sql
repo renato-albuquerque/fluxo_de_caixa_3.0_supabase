@@ -95,7 +95,7 @@ where d.data = (
 
 -- PK & FK
 alter table gold.fato_saldo_anterior
-add constraint pk_fato_saldo_anterior
+drop table if exists gold.fato_movimentos;add constraint pk_fato_saldo_anterior
   primary key (data_id, banco_id),
 
 add constraint fk_fsa_data
@@ -109,6 +109,8 @@ add constraint fk_fsa_banco
 select * from gold.fato_saldo_anterior;
 
 -- fato_movimentos
+drop table if exists gold.fato_movimentos cascade; -- corrigir tabela gold.fato_movimentos
+
 create table if not exists gold.fato_movimentos as
 select
   banco_id,   --fk para gold.dim_bancos
@@ -116,7 +118,7 @@ select
   tipo,
   data,
   valor
-from silver.movimentos_transf; 
+from silver.movimentos_novo_transf; 
 
 -- PK & FK
 alter table gold.fato_movimentos
@@ -198,6 +200,14 @@ select
 from gold.fato_movimentos;
 
 select * from gold.vw_fato_movimentos;
+
+-- check:
+select sum(valor) from gold.vw_fato_movimentos;
+-- -5876243.17 (ok)
+
+select count(*) as qtd_gold
+from gold.vw_fato_movimentos;
+-- 14932 (ok)
 
 -- views criadas no supabase
 vw_dim_bancos
