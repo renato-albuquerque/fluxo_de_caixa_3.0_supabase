@@ -80,13 +80,13 @@ A arquitetura segue o padrão **Medallion Architecture**: <br>
 - [Passos no supabase para criação da camada bronze.](supabase_queries/1_bronze_tables.sql)
 - [Passos no supabase para criação da camada silver.](supabase_queries/2_silver_tables.sql)
 - [Passos no supabase para criação da camada gold.](supabase_queries/3_gold_tables.sql)
-
+<br>
 - Tabelas da Camada GOLD criadas
 ![gold_layer_tables](images/gold_layer_tables.PNG)
-
+<br>
 - Modelagem de Dados | Camada GOLD
 ![gold_data_modeling](images/gold_data_modeling.PNG)
-
+<br>
 - Desenvolvimento de VIEWS para consumo no Power BI | Camada GOLD
 vw_dim_bancos <br>
 vw_dim_plano_contas <br>
@@ -96,7 +96,7 @@ vw_fato_movimentos <br>
 
 - Dashboards em Power BI | Dataviz
 02 modelos foram desenvolvidos para o cliente: <br>
-![dashboard_dfc](images/dashboard_dfc.PNG)
+![dashboard_dfc](images/dashboard_dfc.PNG) <br>
 ![dashboard_matriz](images/dashboard_matriz.PNG)
 
 
