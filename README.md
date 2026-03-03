@@ -93,7 +93,7 @@ vw_dim_calendario <br>
 vw_fato_saldo_anterior <br>
 vw_fato_movimentos <br>
 
-- Dashboards em Power BI | Dataviz <br>
+- Dashboards no Power BI | Dataviz <br>
 02 modelos foram desenvolvidos para o cliente: <br>
 ![dashboard_dfc](images/dashboard_dfc.PNG) <br>
 ![dashboard_matriz](images/dashboard_matriz.PNG)
@@ -132,6 +132,7 @@ A versão 3.0 consolida o projeto DFC como um case real de:
 - Governança de dados
 - Data Quality aplicada
 - Engenharia de Dados orientada à confiabilidade
+<br>
 
 [End] 🎆
 <br>
