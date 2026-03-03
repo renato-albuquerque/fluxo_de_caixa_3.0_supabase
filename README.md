@@ -7,9 +7,8 @@
 2. Arquitetura do Projeto | Versão 3.0  
 3. Stack Tecnológica  
 4. Desenvolvimento
-5. Caso Real de Data Quality  
-6. Boas Práticas Consolidadas  
-7. Conclusão  
+5. Caso Real de Data Quality    
+6. Conclusão  
 
 ---
 
@@ -81,7 +80,7 @@ A arquitetura segue o padrão **Medallion Architecture**: <br>
 - [Passos no supabase para criação da camada silver.](supabase_queries/2_silver_tables.sql)
 - [Passos no supabase para criação da camada gold.](supabase_queries/3_gold_tables.sql) <br>
 
-- Tabelas da Camada GOLD criadas <br>
+- Tabelas criadas | Camada GOLD <br>
 ![gold_layer_tables](images/gold_layer_tables.PNG) <br>
 
 - Modelagem de Dados | Camada GOLD <br>
@@ -99,6 +98,48 @@ vw_fato_movimentos <br>
 ![dashboard_dfc](images/dashboard_dfc.PNG) <br>
 ![dashboard_matriz](images/dashboard_matriz.PNG)
 
+# 🚨 5. Caso Real de Data Quality
+- Lições aprendidas durante processo de "data quality" com erro identificado no dataviz. Problema identificado entre a ingestão de dados e a camada bronze. <br>
+![dataviz_error](images/supabase_data_quality.PNG) 
+
+- Correções realizadas e erro corrigido.
+![error_corrected](images/check_dado_dashboard.PNG) 
+
+- Fluxo completo, dado correto no dataviz
+![dataviz_error](images/data_quality_flow.PNG) 
+
+- [Passos no pdf de lições aprendidas.](data_quality/licoes_aprendidas_data_quality.pdf)
+
+- [Post no Linkedin sobre este case de Data Quality.](https://www.linkedin.com/posts/renato-malbuquerque_dataengineering-etl-dataquality-activity-7426128850264383488-xDA7?utm_source=share&utm_medium=member_desktop&rcm=ACoAAASmTtwBGZ_oPJdVVzH2BmXOpsUhvTZfQPE)
 
 
- 
+# 🏆 6. Conclusão
+Além da evolução tecnológica desta versão 3.0 do projeto fluxo de caixa, foi uma evolução de maturidade em Engenharia de Dados. <br>
+
+Este projeto demonstrou:
+- Investigação por camadas
+- Validação quantitativa
+- Rastreabilidade de erros
+- Disciplina de reprocessamento
+- Pensamento crítico aplicado à qualidade de dados
+- Aplicação real de princípios de Data Engineering
+
+📌 Principal aprendizado: <br>
+Se o dado entra errado na Bronze, todo o pipeline estará errado. <br>
+
+A versão 3.0 consolida o projeto DFC como um case real de:
+- Arquitetura moderna
+- Governança de dados
+- Data Quality aplicada
+- Engenharia de Dados orientada à confiabilidade
+
+[End] 🎆
+<br>
+
+### 👍 Meus contatos
+- LinkedIn - [renato-malbuquerque](https://www.linkedin.com/in/renato-malbuquerque/)
+- GitHub - [renato-albuquerque](https://github.com/renato-albuquerque)
+- Discord - [Renato Albuquerque#0025](https://discordapp.com/users/992621595547938837)
+- Business Card - [Renato Albuquerque](https://rma-contacts.vercel.app/)
+
+
