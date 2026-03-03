@@ -81,10 +81,10 @@ A arquitetura segue o padrão **Medallion Architecture**: <br>
 - [Passos no supabase para criação da camada silver.](supabase_queries/2_silver_tables.sql)
 - [Passos no supabase para criação da camada gold.](supabase_queries/3_gold_tables.sql) <br>
 
-- Tabelas da Camada GOLD criadas
+- Tabelas da Camada GOLD criadas <br>
 ![gold_layer_tables](images/gold_layer_tables.PNG) <br>
 
-- Modelagem de Dados | Camada GOLD
+- Modelagem de Dados | Camada GOLD <br>
 ![gold_data_modeling](images/gold_data_modeling.PNG) <br>
 
 - Desenvolvimento de VIEWS para consumo no Power BI | Camada GOLD
