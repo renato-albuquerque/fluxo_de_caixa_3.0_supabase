@@ -6,11 +6,10 @@
 1. Evolução da Arquitetura até a Versão 3.0  
 2. Arquitetura do Projeto | Versão 3.0  
 3. Stack Tecnológica  
-4. Pipeline de Dados (Bronze / Silver / Gold)  
-5. Caso Real de Data Quality (Aprendizado Crítico)  
+4. Desenvolvimento
+5. Caso Real de Data Quality  
 6. Boas Práticas Consolidadas  
-7. Desenvolvimento  
-8. Conclusão  
+7. Conclusão  
 
 ---
 
@@ -47,7 +46,7 @@ A arquitetura segue o padrão **Medallion Architecture**: <br>
 - Dados ingeridos no formato mais próximo possível da origem.
 - Sem regras de negócio.
 - Sem enriquecimento.
-- Apenas padronizações técnicas mínimas.
+- Camada bruta dos dados.
 
 ## 🔹 Silver (Clean Layer)
 - Tratamento de tipos de dados.
@@ -73,3 +72,33 @@ A arquitetura segue o padrão **Medallion Architecture**: <br>
 - `Excel` – Fonte original dos dados financeiros
 
 ---
+
+# 🎯 4. Desenvolvimento
+
+- Ingestão de dados no supabase.com (upload dos datasets na plataforma)
+
+- [Passos no supabase para criação da camada bronze.](supabase_queries/1_bronze_tables.sql)
+- [Passos no supabase para criação da camada silver.](supabase_queries/2_silver_tables.sql)
+- [Passos no supabase para criação da camada gold.](supabase_queries/3_gold_tables.sql)
+
+- Tabelas da Camada GOLD criadas
+![gold_layer_tables](images/gold_layer_tables.PNG)
+
+- Modelagem de Dados | Camada GOLD
+![gold_data_modeling](images/gold_data_modeling.PNG)
+
+- Desenvolvimento de VIEWS para consumo no Power BI | Camada GOLD
+vw_dim_bancos <br>
+vw_dim_plano_contas <br>
+vw_dim_calendario <br>
+vw_fato_saldo_anterior <br>
+vw_fato_movimentos <br>
+
+- Dashboards em Power BI | Dataviz
+02 modelos foram desenvolvidos para o cliente: <br>
+![dashboard_dfc](images/dashboard_dfc.PNG)
+![dashboard_matriz](images/dashboard_matriz.PNG)
+
+
+
+ 
