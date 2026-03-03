@@ -87,14 +87,14 @@ A arquitetura segue o padrão **Medallion Architecture**: <br>
 - Modelagem de Dados | Camada GOLD <br>
 ![gold_data_modeling](images/gold_data_modeling.PNG) <br>
 
-- Desenvolvimento de VIEWS para consumo no Power BI | Camada GOLD
+- Desenvolvimento de VIEWS para consumo no Power BI | Camada GOLD <br>
 vw_dim_bancos <br>
 vw_dim_plano_contas <br>
 vw_dim_calendario <br>
 vw_fato_saldo_anterior <br>
 vw_fato_movimentos <br>
 
-- Dashboards em Power BI | Dataviz
+- Dashboards em Power BI | Dataviz <br>
 02 modelos foram desenvolvidos para o cliente: <br>
 ![dashboard_dfc](images/dashboard_dfc.PNG) <br>
 ![dashboard_matriz](images/dashboard_matriz.PNG)
